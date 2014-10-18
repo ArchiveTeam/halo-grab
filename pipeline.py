@@ -194,9 +194,9 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ("halo3")
+        assert item_type in ("halo3file")
         
-        if item_type == 'halo3':
+        if item_type == 'halo3file':
             suffixesa = string.digits
             suffixesb = string.digits
             
