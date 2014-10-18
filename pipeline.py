@@ -194,12 +194,17 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-#        assert item_type in ("page")
+        assert item_type in ("halo3")
         
-#        if item_type == 'page':
-#            wget_args.append('http://www.qwiki.com/v/{0}'.format(item_value))
-#        else:
-#            raise Exception('Unknown item')
+        if item_type == 'halo3':
+            suffixesa = string.digits
+            suffixesb = string.digits
+            
+            for args in ['http://halo.bungie.net/Online/Halo3UserContentDetails.aspx?h3fileid={0}{1}{2}'.format(item_value, a, b) for a in suffixesa for b in suffixesb]:
+                wget_args.append(args[0])
+            
+        else:
+            raise Exception('Unknown item')
         
         if 'bind_address' in globals():
             wget_args.extend(['--bind-address', globals()['bind_address']])
