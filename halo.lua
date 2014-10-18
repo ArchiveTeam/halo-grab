@@ -41,6 +41,29 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     return false
   end
   
+  if item_type == "halo3file" then
+    if string.match(url, "[^0-9]"..item_value.."[0-9][0-9]")
+      or string.match(url, "/javascript/")
+      or string.match(url, "/base_css/")
+      or string.match(url, "/images/")
+      or string.match(url, "/Silverlight/")
+      or string.match(url, "/Stats/")
+      or string.match(url, "/App_themes/")
+      or string.match(url, "/WebResource%.axd")
+      or string.match(url, "/bprovideo/")
+      or string.match(url, "/ScriptResource%.axd")
+      or string.match(url, "/Screenshot%.ashx")
+      or string.match(url, "silverlight%.dlservice%.microsoft%.com")
+      or string.match(url, "/GameStatsHalo3%.aspx") then
+      if not string.match(url, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
   
 end
 
@@ -48,6 +71,70 @@ end
 wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
   local html = nil
+  
+  if item_type == "halo3file" then
+    if string.match(url, "[^0-9]"..item_value.."[0-9][0-9]") then
+      if not string.match(url, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
+        html = read_file(html)
+        
+        for customurl in string.gmatch(html, '"(http[s]?://[^"]+)"') do
+          if string.match(customurl, "[^0-9]"..item_value.."[0-9][0-9]")
+            or string.match(customurl, "/javascript/")
+            or string.match(customurl, "/base_css/")
+            or string.match(customurl, "/images/")
+            or string.match(customurl, "/Silverlight/")
+            or string.match(customurl, "/Stats/")
+            or string.match(customurl, "/App_themes/")
+            or string.match(customurl, "/WebResource%.axd")
+            or string.match(customurl, "/bprovideo/")
+            or string.match(customurl, "/ScriptResource%.axd")
+            or string.match(customurl, "/Screenshot%.ashx")
+            or string.match(customurl, "silverlight%.dlservice%.microsoft%.com")
+            or string.match(customurl, "/GameStatsHalo3%.aspx") then
+            if not string.match(customurl, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
+              if downloaded[customurl] ~= true then
+                table.insert(urls, { url=customurl })
+              end
+              if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
+                newcustomurl = string.gsub(customurl, "GameFiles%.aspx%?guid=", "GameStatsHalo3%.aspx%?gameguid=")
+                if downloaded[newcustomurl] ~= true then
+                  table.insert(urls, { url=newcustomurl })
+                end
+              end
+            end
+          end
+        end
+        for customurlnf in string.gmatch(html, '"(/[^"]+)"') do
+          if string.match(customurlnf, "[^0-9]"..item_value.."[0-9][0-9]")
+            or string.match(customurlnf, "/javascript/")
+            or string.match(customurlnf, "/base_css/")
+            or string.match(customurlnf, "/images/")
+            or string.match(customurlnf, "/Silverlight/")
+            or string.match(customurlnf, "/Stats/")
+            or string.match(customurlnf, "/App_themes/")
+            or string.match(customurlnf, "/WebResource%.axd")
+            or string.match(customurlnf, "/bprovideo/")
+            or string.match(customurlnf, "/ScriptResource%.axd")
+            or string.match(customurlnf, "/Screenshot%.ashx")
+            or string.match(customurlnf, "/GameStatsHalo3%.aspx") then
+            if not string.match(customurlnf, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
+              local base = "http://halo.bungie.net"
+              local customurl = base..customurlnf
+              if downloaded[customurl] ~= true then
+                table.insert(urls, { url=customurl })
+              end
+              if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
+                newcustomurl = string.gsub(customurl, "GameFiles%.aspx%?guid=", "GameStatsHalo3%.aspx%?gameguid=")
+                if downloaded[newcustomurl] ~= true then
+                  table.insert(urls, { url=newcustomurl })
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
   
   
   return urls
@@ -64,7 +151,12 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   io.stdout:flush()
   
   if (status_code >= 200 and status_code <= 399) or status_code == 403 then
-    downloaded[url.url] = true
+    if string.match(url.url, "https://") then
+      local newurl = string.gsub(url.url, "https://", "http://")
+      downloaded[newurl] = true
+    else
+      downloaded[url.url] = true
+    end
   end
   
   if status_code >= 500 or
