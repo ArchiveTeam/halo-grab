@@ -55,7 +55,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       or string.match(url, "/Screenshot%.ashx")
       or string.match(url, "silverlight%.dlservice%.microsoft%.com")
       or string.match(url, "/GameStatsHalo3%.aspx") then
-      if not string.match(url, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
+      if not string.match(url, "[0-9]?"..item_value.."[0-9][0-9][0-9]")
+        and not string.match(url, "PlayerStatsHalo3%.aspx%?player=") then
         return true
       else
         return false
@@ -91,7 +92,8 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             or string.match(customurl, "/Screenshot%.ashx")
             or string.match(customurl, "silverlight%.dlservice%.microsoft%.com")
             or string.match(customurl, "/GameStatsHalo3%.aspx") then
-            if not string.match(customurl, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
+            if not string.match(customurl, "[0-9]?"..item_value.."[0-9][0-9][0-9]")
+              and not string.match(customurl, "PlayerStatsHalo3%.aspx%?player=") then
               if downloaded[customurl] ~= true then
                 table.insert(urls, { url=customurl })
               end
@@ -117,7 +119,8 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             or string.match(customurlnf, "/ScriptResource%.axd")
             or string.match(customurlnf, "/Screenshot%.ashx")
             or string.match(customurlnf, "/GameStatsHalo3%.aspx") then
-            if not string.match(customurlnf, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
+            if not string.match(customurlnf, "[0-9]?"..item_value.."[0-9][0-9][0-9]")
+              and not string.match(customurl, "PlayerStatsHalo3%.aspx%?player=")  then
               local base = "http://halo.bungie.net"
               local customurl = base..customurlnf
               if downloaded[customurl] ~= true then
