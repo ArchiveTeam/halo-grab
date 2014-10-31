@@ -8,6 +8,7 @@ local item_type = os.getenv('item_type')
 local item_value = os.getenv('item_value')
 
 local downloaded = {}
+local addedtolist = {}
 
 load_json_file = function(file)
   if file then
@@ -37,7 +38,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local parenturl = parent["url"]
   local html = nil
   
-  if downloaded[url] == true then
+  if downloaded[url] == true or addedtolist[url] == true then
     return false
   end
   
@@ -96,12 +97,12 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             if not string.match(customurl, "[0-9]?"..item_value.."[0-9][0-9][0-9]")
               and not string.match(customurl, "PlayerStatsHalo3%.aspx%?player=")
               and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=") then
-              if downloaded[customurl] ~= true then
+              if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
                 table.insert(urls, { url=customurl })
               end
               if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
                 newcustomurl = string.gsub(customurl, "GameFiles%.aspx%?guid=", "GameStatsHalo3%.aspx%?gameguid=")
-                if downloaded[newcustomurl] ~= true then
+                if downloaded[newcustomurl] ~= true and addedtolist[newcustomurl] ~= true then
                   table.insert(urls, { url=newcustomurl })
                 end
               end
@@ -126,12 +127,12 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
               and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=")  then
               local base = "http://halo.bungie.net"
               local customurl = base..customurlnf
-              if downloaded[customurl] ~= true then
+              if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
                 table.insert(urls, { url=customurl })
               end
               if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
                 newcustomurl = string.gsub(customurl, "GameFiles%.aspx%?guid=", "GameStatsHalo3%.aspx%?gameguid=")
-                if downloaded[newcustomurl] ~= true then
+                if downloaded[newcustomurl] ~= true and addedtolist[newcustomurl] ~= true then
                   table.insert(urls, { url=newcustomurl })
                 end
               end
