@@ -200,8 +200,8 @@ class WgetArgs(object):
             suffixesa = string.digits
             suffixesb = string.digits
             
-            for args in ['http://halo.bungie.net/Online/Halo3UserContentDetails.aspx?h3fileid={0}{1}{2}'.format(item_value, a, b) for a in suffixesa for b in suffixesb]:
-                wget_args.append(args[0])
+            for url in ['http://halo.bungie.net/Online/Halo3UserContentDetails.aspx?h3fileid={0}{1}{2}'.format(item_value, a, b) for a in suffixesa for b in suffixesb]:
+                wget_args.append(url)
             
         else:
             raise Exception('Unknown item')
