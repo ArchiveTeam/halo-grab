@@ -49,7 +49,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       or string.match(url, "/images/")
       or string.match(url, "/Silverlight/")
       or string.match(url, "/Stats/")
-      or string.match(url, "/App_themes/")
+      or string.match(url, "/App_Themes/")
       or string.match(url, "/WebResource%.axd")
       or string.match(url, "/bprovideo/")
       or string.match(url, "/ScriptResource%.axd")
@@ -80,6 +80,13 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       if not string.match(url, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
         html = read_file(html)
         
+        if string.match(url, "/Stats/GameStatsHalo3.%aspx%?gameguid=") then
+          customurl = string.gsub(url, "/Stats/GameStatsHalo3.%aspx%?gameguid=", "/Stats/GameFiles%.aspx%?guid=")
+          if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
+            table.insert(urls, { url=customurl })
+          end
+        end
+        
         for customurl in string.gmatch(html, '"(http[s]?://[^"]+)"') do
           if string.match(customurl, "[^0-9]"..item_value.."[0-9][0-9]")
             or string.match(customurl, "/javascript/")
@@ -87,7 +94,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             or string.match(customurl, "/images/")
             or string.match(customurl, "/Silverlight/")
             or string.match(customurl, "/Stats/")
-            or string.match(customurl, "/App_themes/")
+            or string.match(customurl, "/App_Themes/")
             or string.match(customurl, "/WebResource%.axd")
             or string.match(customurl, "/bprovideo/")
             or string.match(customurl, "/ScriptResource%.axd")
@@ -100,12 +107,6 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
               if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
                 table.insert(urls, { url=customurl })
               end
-              if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
-                newcustomurl = string.gsub(customurl, "GameStatsHalo3%.aspx%?gameguid=", "GameFiles%.aspx%?guid=")
-                if downloaded[newcustomurl] ~= true and addedtolist[newcustomurl] ~= true then
-                  table.insert(urls, { url=newcustomurl })
-                end
-              end
             end
           end
         end
@@ -116,7 +117,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             or string.match(customurlnf, "/images/")
             or string.match(customurlnf, "/Silverlight/")
             or string.match(customurlnf, "/Stats/")
-            or string.match(customurlnf, "/App_themes/")
+            or string.match(customurlnf, "/App_Themes/")
             or string.match(customurlnf, "/WebResource%.axd")
             or string.match(customurlnf, "/bprovideo/")
             or string.match(customurlnf, "/ScriptResource%.axd")
@@ -129,12 +130,6 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
               local customurl = base..customurlnf
               if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
                 table.insert(urls, { url=customurl })
-              end
-              if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
-                newcustomurl = string.gsub(customurl, "GameStatsHalo3%.aspx%?gameguid=", "GameFiles%.aspx%?guid=")
-                if downloaded[newcustomurl] ~= true and addedtolist[newcustomurl] ~= true then
-                  table.insert(urls, { url=newcustomurl })
-                end
               end
             end
           end
