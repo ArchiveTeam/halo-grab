@@ -74,18 +74,18 @@ end
 wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
   local html = nil
+        
+  if string.match(url, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
+    local customurl = string.gsub(url, "/Stats/GameStatsHalo3%.aspx%?gameguid=", "/Stats/GameFiles%.aspx%?guid=")
+    if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
+      table.insert(urls, { url=customurl })
+    end
+  end
   
   if item_type == "halo3file" then
     if string.match(url, "[^0-9]"..item_value.."[0-9][0-9]") then
       if not string.match(url, "[0-9]?"..item_value.."[0-9][0-9][0-9]") then
         html = read_file(html)
-        
-        if string.match(url, "/Stats/GameStatsHalo3.%aspx%?gameguid=[0-9]+") then
-          local customurl = string.gsub(url, "/Stats/GameStatsHalo3.%aspx%?gameguid=", "/Stats/GameFiles%.aspx%?guid=")
-          if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
-            table.insert(urls, { url=customurl })
-          end
-        end
         
         for customurl in string.gmatch(html, '"(http[s]?://[^"]+)"') do
           if string.match(customurl, "[^0-9]"..item_value.."[0-9][0-9]")
