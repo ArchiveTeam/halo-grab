@@ -110,6 +110,29 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             end
           end
         end
+        for customurl in string.gmatch(html, '%((http[s]?://[^%)]+)%)') do
+          if string.match(customurl, "[^0-9]"..item_value.."[0-9][0-9]")
+            or string.match(customurl, "/javascript/")
+            or string.match(customurl, "/base_css/")
+            or string.match(customurl, "/images/")
+            or string.match(customurl, "/Silverlight/")
+            or string.match(customurl, "/Stats/")
+            or string.match(customurl, "/App_Themes/")
+            or string.match(customurl, "/WebResource%.axd")
+            or string.match(customurl, "/bprovideo/")
+            or string.match(customurl, "/ScriptResource%.axd")
+            or string.match(customurl, "/Screenshot%.ashx")
+            or string.match(customurl, "silverlight%.dlservice%.microsoft%.com")
+            or string.match(customurl, "/GameStatsHalo3%.aspx") then
+            if not string.match(customurl, "[0-9]?"..item_value.."[0-9][0-9][0-9]")
+              and not string.match(customurl, "PlayerStatsHalo3%.aspx%?player=")
+              and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=") then
+              if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
+                table.insert(urls, { url=customurl })
+              end
+            end
+          end
+        end
         for customurlnf in string.gmatch(html, '"(/[^"]+)"') do
           if string.match(customurlnf, "[^0-9]"..item_value.."[0-9][0-9]")
             or string.match(customurlnf, "/javascript/")
