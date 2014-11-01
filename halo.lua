@@ -101,7 +101,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
                 table.insert(urls, { url=customurl })
               end
               if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
-                newcustomurl = string.gsub(customurl, "GameFiles%.aspx%?guid=", "GameStatsHalo3%.aspx%?gameguid=")
+                newcustomurl = string.gsub(customurl, "GameStatsHalo3%.aspx%?gameguid=", "GameFiles%.aspx%?guid=")
                 if downloaded[newcustomurl] ~= true and addedtolist[newcustomurl] ~= true then
                   table.insert(urls, { url=newcustomurl })
                 end
@@ -131,7 +131,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
                 table.insert(urls, { url=customurl })
               end
               if string.match(customurl, "/Stats/GameStatsHalo3%.aspx%?gameguid=[0-9]+") then
-                newcustomurl = string.gsub(customurl, "GameFiles%.aspx%?guid=", "GameStatsHalo3%.aspx%?gameguid=")
+                newcustomurl = string.gsub(customurl, "GameStatsHalo3%.aspx%?gameguid=", "GameFiles%.aspx%?guid=")
                 if downloaded[newcustomurl] ~= true and addedtolist[newcustomurl] ~= true then
                   table.insert(urls, { url=newcustomurl })
                 end
