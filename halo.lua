@@ -1393,7 +1393,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     return false
   end
   
-  if item_type == "halo3file" then
+  if item_type == "halo3file" and (downloaded[url] ~= true or addedtolist[url] ~= true) then
     if string.match(url, "[^0-9]"..item_value.."[0-9][0-9]")
       or string.match(url, "/javascript/")
       or string.match(url, "/base_css/")
