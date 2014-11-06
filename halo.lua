@@ -1434,6 +1434,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     local customurl = string.gsub(url, "/Stats/GameStatsHalo3%.aspx%?gameguid=", "/Stats/GameFiles%.aspx%?guid=")
     if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
       table.insert(urls, { url=customurl })
+      addedtolist[customurl] = true
     end
   end
   
@@ -1464,6 +1465,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
               and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=") then
               if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
                 table.insert(urls, { url=customurl })
+                addedtolist[customurl] = true
               end
             end
           end
@@ -1490,6 +1492,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
               and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=") then
               if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
                 table.insert(urls, { url=customurl })
+                addedtolist[customurl] = true
               end
             end
           end
@@ -1518,6 +1521,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
               local customurl = base..customurlnf
               if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
                 table.insert(urls, { url=customurl })
+                addedtolist[customurl] = true
               end
             end
           end
