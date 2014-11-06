@@ -1414,7 +1414,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         and not string.match(url, "PlayerStatsHalo3%.aspx%?player=")
         and not string.match(url, "Default%.aspx%?player=")
         and not string.match(url, "/Stats/Halo3/Default%.aspx%?player=") then
-        return verdict
+        addedtolist[url] = true
+        return true
       else
         return false
       end
