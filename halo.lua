@@ -1532,10 +1532,10 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     end
   end
   
-  for _,url in ipairs(urlsone) do
-    if dup[url] ~= true then
-      urls[#urls+1] = url
-      dup[url] = true
+  for _,urla in ipairs(urlsone) do
+    if not dup[urla] then
+      table.insert(urls, { url=urla })
+      dup[urla] = true
     end
   end
   
