@@ -1414,7 +1414,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         and not string.match(url, "PlayerStatsHalo3%.aspx%?player=")
         and not string.match(url, "Default%.aspx%?player=")
         and not string.match(url, "/Stats/Halo3/Default%.aspx%?player=") then
-        return true
+        return verdict
       else
         return false
       end
@@ -1529,13 +1529,6 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
           end
         end
       end
-    end
-  end
-  
-  for _,urla in ipairs(urlsone) do
-    if not dup[urla] then
-      table.insert(urls, { url=urla })
-      dup[urla] = true
     end
   end
   
