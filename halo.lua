@@ -1435,7 +1435,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         
   if string.match(url, "/Stats/GameStatsHalo3%.aspx%?gameguid=") then
     local customurl = string.gsub(url, "/Stats/GameStatsHalo3%.aspx%?gameguid=", "/Stats/GameFiles%.aspx%?guid=")
-    if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
+    if downloaded[customurl] ~= true then
       table.insert(urlsone, { url=customurl })
       addedtolist[customurl] = true
     end
@@ -1466,7 +1466,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             if not string.match(customurl, "[0-9]?"..item_value.."[0-9][0-9][0-9]")
               and not string.match(customurl, "PlayerStatsHalo3%.aspx%?player=")
               and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=") then
-              if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
+              if downloaded[customurl] ~= true then
                 table.insert(urlsone, { url=customurl })
                 addedtolist[customurl] = true
               end
@@ -1493,7 +1493,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
             if not string.match(customurl, "[0-9]?"..item_value.."[0-9][0-9][0-9]")
               and not string.match(customurl, "PlayerStatsHalo3%.aspx%?player=")
               and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=") then
-              if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
+              if downloaded[customurl] ~= true then
                 table.insert(urlsone, { url=customurl })
                 addedtolist[customurl] = true
               end
@@ -1522,7 +1522,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
               and not string.match(customurl, "/Stats/Halo3/Default%.aspx%?player=")  then
               local base = "http://halo.bungie.net"
               local customurl = base..customurlnf
-              if downloaded[customurl] ~= true and addedtolist[customurl] ~= true then
+              if downloaded[customurl] ~= true then
                 table.insert(urlsone, { url=customurl })
                 addedtolist[customurl] = true
               end
